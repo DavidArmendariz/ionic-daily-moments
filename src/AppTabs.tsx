@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import HomePage from './pages/HomePage';
 import { Route, Redirect } from 'react-router-dom';
-import SettingsPage from './pages/Settings';
+import SettingsPage from './pages/SettingsPage';
 import { home as homeIcon, settings as settingsIcon } from 'ionicons/icons';
 import EntryPage from './pages/EntryPage';
 import { useAuth } from './auth';
