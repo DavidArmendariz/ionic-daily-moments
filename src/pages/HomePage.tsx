@@ -4,8 +4,11 @@ import {
   IonTitle,
   IonToolbar,
   IonPage,
+  IonList,
+  IonItem,
 } from '@ionic/react';
 import React from 'react';
+import { entries } from '../data';
 
 const HomePage: React.FC = () => {
   return (
@@ -15,7 +18,15 @@ const HomePage: React.FC = () => {
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">This is the home page.</IonContent>
+      <IonContent className="ion-padding">
+        <IonList>
+          {entries.map((entry) => (
+            <IonItem button key={entry.id} routerLink={`/entries/${entry.id}`}>
+              {entry.title}
+            </IonItem>
+          ))}
+        </IonList>
+      </IonContent>
     </IonPage>
   );
 };
