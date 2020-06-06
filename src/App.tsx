@@ -13,6 +13,7 @@ import { Route, Redirect } from 'react-router-dom';
 import SettingsPage from './pages/Settings';
 import { IonReactRouter } from '@ionic/react-router';
 import { home as homeIcon, settings as settingsIcon } from 'ionicons/icons';
+import EntryPage from './pages/EntryPage';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/settings" component={SettingsPage} />
             <Redirect exact path="/" to="/home" />
+            <Route path="/entries/:id" component={EntryPage} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="Home" href="/home">
