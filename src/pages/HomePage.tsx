@@ -9,17 +9,14 @@ import {
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebase';
+import { Entry, toEntry } from '../models';
 
 const HomePage: React.FC = () => {
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
   useEffect(() => {
     const entriesRef = firestore.collection('entries');
-    entriesRef.get().then((snapshot) => {
-      const entries = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setEntries(entries);
+    entriesRef.get().then(({ docs }) => {
+      setEntries(docs.map(toEntry));
     });
   }, []);
   return (

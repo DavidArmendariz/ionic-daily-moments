@@ -10,6 +10,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { firestore } from '../firebase';
+import { Entry, toEntry } from '../models';
 
 interface RouteParams {
   id: string;
@@ -17,12 +18,11 @@ interface RouteParams {
 
 const EntryPage: React.FC = () => {
   const { id } = useParams<RouteParams>();
-  const [entry, setEntry] = useState<any>();
+  const [entry, setEntry] = useState<Entry>();
   useEffect(() => {
     const entryRef = firestore.collection('entries').doc(id);
     entryRef.get().then((doc) => {
-      const entry = { id: doc.id, ...doc.data() };
-      setEntry(entry);
+      setEntry(toEntry(doc));
     });
   }, [id]);
   return (
