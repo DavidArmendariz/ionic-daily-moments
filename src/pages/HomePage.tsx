@@ -28,7 +28,6 @@ const HomePage: React.FC = () => {
       setEntries(docs.map(toEntry));
     });
   }, [userId]);
-  console.log('[HomePage] render entries:', entries);
   return (
     <IonPage>
       <IonHeader>
