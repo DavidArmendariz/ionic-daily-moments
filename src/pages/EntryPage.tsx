@@ -21,6 +21,7 @@ const EntryPage: React.FC = () => {
   const { userId } = useAuth();
   const { id } = useParams<RouteParams>();
   const [entry, setEntry] = useState<Entry>();
+  console.log('[EntryPage] render');
   useEffect(() => {
     const entryRef = firestore
       .collection('users')
