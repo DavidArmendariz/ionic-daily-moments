@@ -24,10 +24,11 @@ const HomePage: React.FC = () => {
       .collection('users')
       .doc(userId)
       .collection('entries');
-    entriesRef.get().then(({ docs }) => {
+    return entriesRef.onSnapshot(({ docs }) => {
       setEntries(docs.map(toEntry));
     });
   }, [userId]);
+  console.log('[HomePage] render entries:', entries);
   return (
     <IonPage>
       <IonHeader>
