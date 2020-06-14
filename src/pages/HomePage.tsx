@@ -6,11 +6,15 @@ import {
   IonPage,
   IonList,
   IonItem,
+  IonFab,
+  IonFabButton,
+  IonIcon,
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
 import { useAuth } from '../auth';
+import { add as addIcon } from 'ionicons/icons';
 
 const HomePage: React.FC = () => {
   const { userId } = useAuth();
@@ -42,6 +46,11 @@ const HomePage: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
+        <IonFab vertical="bottom" horizontal="end">
+          <IonFabButton routerLink="/my/entries/add">
+            <IonIcon icon={addIcon} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
