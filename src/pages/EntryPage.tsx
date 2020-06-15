@@ -15,6 +15,7 @@ import { firestore } from '../firebase';
 import { Entry, toEntry } from '../models';
 import { useAuth } from '../auth';
 import { trash as trashIcon } from 'ionicons/icons';
+import { formatDate } from '../date';
 
 interface RouteParams {
   id: string;
@@ -54,7 +55,7 @@ const EntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{entry?.title}</IonTitle>
+          <IonTitle>{formatDate(entry?.date)}</IonTitle>
           <IonButtons slot="end" onClick={handleDelete}>
             <IonButton>
               <IonIcon icon={trashIcon} slot="icon-only" />
@@ -62,7 +63,10 @@ const EntryPage: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">{entry?.description}</IonContent>
+      <IonContent className="ion-padding">
+        <h2>{entry?.title}</h2>
+        <p>{entry?.description}</p>
+      </IonContent>
     </IonPage>
   );
 };
