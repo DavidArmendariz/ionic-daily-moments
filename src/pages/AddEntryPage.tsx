@@ -25,6 +25,16 @@ const AddEntryPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
+  const [pictureUrl, setPictureUrl] = useState('/assets/placeholder.png');
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files.length > 0) {
+      const file = event.target.files.item(0);
+      const pictureUrl = URL.createObjectURL(file);
+      setPictureUrl(pictureUrl);
+    }
+  };
+
   const handleSave = async () => {
     const entriesRef = firestore
       .collection('users')
@@ -60,6 +70,12 @@ const AddEntryPage: React.FC = () => {
               value={title}
               onIonChange={(event) => setTitle(event.detail.value)}
             />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="stacked">Picture</IonLabel>
+            <br />
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <img src={pictureUrl} alt="" />
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Description</IonLabel>
