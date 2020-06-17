@@ -13,6 +13,7 @@ import {
   IonTextarea,
   IonButton,
   IonDatetime,
+  isPlatform,
 } from '@ionic/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { firestore, storage } from '../firebase';
@@ -58,14 +59,18 @@ const AddEntryPage: React.FC = () => {
   };
 
   const handlePictureClick = async () => {
-    try {
-      const photo = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Camera,
-      });
-      setPictureUrl(photo.webPath);
-    } catch (error) {
-      console.log(error);
+    if (isPlatform('capacitor')) {
+      try {
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Camera,
+        });
+        setPictureUrl(photo.webPath);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      fileInputRef.current.click();
     }
   };
 
