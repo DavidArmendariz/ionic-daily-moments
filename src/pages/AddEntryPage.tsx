@@ -18,7 +18,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { firestore, storage } from '../firebase';
 import { useAuth } from '../auth';
 import { useHistory } from 'react-router';
-import { Plugins, CameraResultType } from '@capacitor/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
 const { Camera } = Plugins;
 
@@ -58,10 +58,15 @@ const AddEntryPage: React.FC = () => {
   };
 
   const handlePictureClick = async () => {
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-    });
-    setPictureUrl(photo.webPath);
+    try {
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera,
+      });
+      setPictureUrl(photo.webPath);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSave = async () => {
@@ -70,7 +75,7 @@ const AddEntryPage: React.FC = () => {
       .doc(userId)
       .collection('entries');
     const entryData = { date, title, pictureUrl, description };
-    if (pictureUrl.startsWith('blob:')) {
+    if (!pictureUrl.startsWith('/assets')) {
       entryData.pictureUrl = await savePicture(pictureUrl, userId);
     }
     const entryRef = await entriesRef.add(entryData);
